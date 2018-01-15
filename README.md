@@ -1,1 +1,1 @@
-# golang-gin-test
+# golang-gin-study
