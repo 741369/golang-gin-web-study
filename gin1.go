@@ -45,5 +45,5 @@ func main() {
 }
 
 func GetUsers(c *gin.Context) {
-	c.JSON(200, "helloman")
+	c.JSON(200, "hello world")
 }
