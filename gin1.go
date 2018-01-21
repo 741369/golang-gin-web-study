@@ -7,6 +7,7 @@ import (
 	"time"
 	//这里我们导入已经集成的 mysql 驱动，当然也可以导入原版的 import _ "github.com/go-sql-driver/mysql" 一样的
 	_ "github.com/jinzhu/gorm/dialects/mysql"
+	log "github.com/sirupsen/logrus"
 )
 
 //step1 获取 http_proxy=192.168.1.2:20080 go get github.com/gin-gonic/gin
