@@ -8,6 +8,7 @@ import (
 	//这里我们导入已经集成的 mysql 驱动，当然也可以导入原版的 import _ "github.com/go-sql-driver/mysql" 一样的
 	_ "github.com/jinzhu/gorm/dialects/mysql"
 	log "github.com/sirupsen/logrus"
+	"os"
 )
 
 //step1 获取 http_proxy=192.168.1.2:20080 go get github.com/gin-gonic/gin
@@ -17,10 +18,24 @@ import (
 //
 //step3 http_proxy=192.168.1.2:20080 go get github.com/go-sql-driver/mysql
 //
+//step4 http_proxy=192.168.1.2:20080 go get github.com/sirupsen/logrus
+//
 type User struct {
 	ID        uint `gorm:"primary_key`
 	Uname     string
 	CreatedAt time.Time
+}
+
+func init() {
+	// Log as JSON instead of the default ASCII formatter.
+	log.SetFormatter(&log.JSONFormatter{})
+
+	// Output to stdout instead of the default stderr
+	// Can be any io.Writer, see below for File example
+	log.SetOutput(os.Stdout)
+
+	// Only log the warning severity or above.
+	log.SetLevel(log.WarnLevel)
 }
 
 func main() {
@@ -41,6 +56,17 @@ func main() {
 	ret := db.Create(&user)
 	fmt.Println(user)
 	fmt.Println(ret.Error)
+
+	log.Debug("Useful debugging information.")
+	log.Info("Something noteworthy happened!")
+	log.Warn("You should probably take a look at this.")
+	log.Error("Something failed but I'm not quitting.")
+
+	log.WithFields(log.Fields{
+		"animal": "walrus",
+		"size":   10,
+	}).Warn("A group of walrus emerges from the ocean")
+
 	r.Run(":8080")
 
 }
